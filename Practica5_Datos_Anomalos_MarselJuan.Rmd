@@ -126,6 +126,8 @@ a<-sum(complete.cases(dirty_iris))
 #calculamos porcentaje. Debemos dividir las observaciones completas entre las totales.
 b <- a/nrow(dirty_iris)
 
+clean_iris <- na.omit(dirty_iris)
+
 ```
 
 Hay entonces 92 observaciones completas los cuales son el 61.3% del total de observaciones.
@@ -151,8 +153,19 @@ Hazlo para el data frame con observaciones completas `clean_iris` (que no tiene 
 
 ```{r , include = TRUE}
 
-```
+madm <- function(x) {
+  1.4826 * median(abs(x - median(x, na.rm=TRUE)),na.rm = TRUE)
+}
 
+clean_iris %>% summarise(across(where(is.numeric),list(mean = ~ mean(.x, na.rm = TRUE), sd =  ~ sd(.x, na.rm = TRUE),MADM = ~ madm(.x))))
+
+dirty_iris %>% summarise(across(where(is.numeric),list(mean = ~ mean(.x, na.rm = TRUE), sd =  ~ sd(.x, na.rm = TRUE),MADM = ~ madm(.x))))
+
+
+```
+Realizamos el ejercicio cogiendo como referencia el ejemplo de la diapositiva 74 del tema 5.
+
+Para el data frame clean_iris obtenemos una media de 4.157, una desviación estándar de 2.877 y una MADM de 1.630 en la variable Petal.Length. Sin embargo para el data frame dirty_iris obtenemos una media de 4.484, una desviación estándar de 5.778 y una MADM de 1.630. Como vemos la principal diferencia se ve en la desviación estándar, mientras que la media y MADM tienen valores mas parecidos al comparar los dos dataframes en la variable Petal.Lenght.
 
 ## Ejercicio 5: Métodos de detección de outliers
 
