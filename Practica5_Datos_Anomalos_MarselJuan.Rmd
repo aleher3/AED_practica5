@@ -191,7 +191,7 @@ reglasigma <- function(x){
 # Identificador Hampel
 
 reglahampel <- function(x){
-  (abs(x-median(x,na.rm=TRUE)) >3*MADM(x, na.rm = TRUE))
+  (abs(x-median(x,na.rm=TRUE)) >3*madm(x))
 }
 
 # Regla boxplot
@@ -221,6 +221,7 @@ Nota: podría extenderse la aplicación a todas las variables numéricas usando 
 
 ```{r Solucion ejercicio 6, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
+clean_iris %>% mutate(across(Petal.Length, list(reglasigma,reglahampel,reglaboxplot,reglapercentil)))
 
 
 ```
