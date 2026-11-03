@@ -119,9 +119,17 @@ Sabemos que todas las columnas son numéricas menos "Species". Con mutate modifi
 
 ```{r Solucion ejercicio 3, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
+#Vemos el numero de observaciones commpletas usando la funcion pedida y añadimos sum para tenerlas contadas.
 
+a<-sum(complete.cases(dirty_iris))
+
+#calculamos porcentaje. Debemos dividir las observaciones completas entre las totales.
+b <- a/nrow(dirty_iris)
 
 ```
+
+Hay entonces 92 observaciones completas los cuales son el 61.3% del total de observaciones.
+
 
 # Detección de outliers univariante
 
