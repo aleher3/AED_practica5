@@ -104,11 +104,13 @@ Nota: Puedes reemplazar los valores para cada variable del dataframe usando `mut
 ```{r Solucion ejercicio 2, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 # DEBEMOS ELIMINAR TAMBIEN LOS VALROES IGUALES A CERO YA QUE SE TRATA DE LONGITUDES DE PARTES DE UNA FLOR. NO PUEDEN SER O
 dirty_iris <- dirty_iris %>%
-  mutate(across(where(is.numeric),
-                ~ ifelse(!is.finite(.) | . <= 0, NA, .)))
+  mutate(Sepal.Length = ifelse(Sepal.Length <= 0 | !is.finite(Sepal.Length), NA, Sepal.Length),
+    Sepal.Width  = ifelse(Sepal.Width <= 0 | !is.finite(Sepal.Width), NA, Sepal.Width),
+    Petal.Length = ifelse(Petal.Length <= 0 | !is.finite(Petal.Length), NA, Petal.Length),
+    Petal.Width  = ifelse(Petal.Width <= 0 | !is.finite(Petal.Width), NA, Petal.Width))
 
 ```
-
+Sabemos que todas las columnas son numéricas menos "Species". Con mutate modifico las columnas del df. Utilizo iflese en cada columna de forma que dentro de cada una, si hay valores especiales o menores o igual que 0 se sustituyen por NA, si no se dejan igual. 
 
 ## Ejercicio 3: Valores perdidos y observaciones completas
 
@@ -117,6 +119,8 @@ dirty_iris <- dirty_iris %>%
 
 ```{r Solucion ejercicio 3, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
+
+
 ```
 
 # Detección de outliers univariante
@@ -124,6 +128,7 @@ dirty_iris <- dirty_iris %>%
 Un outlier es una observación (o conjunto de observaciones) que no parecen consistentes con el resto de valores de esa variable. Por lo general, esas observaciones divergirán del patrón de comportamiento del resto de datos, es decir, presentarán una desviación respecto de la distribución de los datos.
 
 En esta sección, vamos a centrarnos en métodos de detección univariantes, así que, en los ejercicios, a modo de ejemplo, analizaremos solo la variable `Petal.Length`.
+
 
 ## Ejercicio 4: Estadísticos básicos
 
